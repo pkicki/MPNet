@@ -40,8 +40,8 @@ def main(args):
     #output_size = 7
     input_size = 28
     output_size = 14
-    #stride = 5
-    stride = 1
+    stride = 5
+    #stride = 1
     model_name = f'mlp_bs{bs}_stride{stride}_PReLU'
     ds_path = f"../datasets/paper/train/"
     ds_val_path = ds_path.replace("train", "val")
@@ -104,12 +104,12 @@ def main(args):
         writer.add_scalar('Loss/epoch_val', epoch_loss, epoch)
         # Save the models
         if epoch == sm:
-            model_path = model_name + str(sm) + '.pkl'
+            model_path = model_name + "_no_" + str(sm) + '.pkl'
             torch.save(mlp.state_dict(), os.path.join(args.model_path, model_path))
             sm = sm + save_step  # save model after every 50 epochs from 100 epoch ownwards
         if epoch_loss < best_val_loss:
             best_val_loss = epoch_loss
-            model_path = model_name + str(best_idx) + '.pkl'
+            model_path = model_name + "_best_" + str(best_idx) + '.pkl'
             torch.save(mlp.state_dict(), os.path.join(args.model_path, model_path))
             best_idx += 1
 
